@@ -36,6 +36,7 @@ import { ActionBar } from 'vs/base/browser/ui/actionbar/actionbar';
 import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { IAction } from 'vs/base/common/actions';
 import { NoTabsTitleControl } from 'vs/workbench/browser/parts/editor/noTabsTitleControl';
+import { NoTitleControl } from 'vs/workbench/browser/parts/editor/noTitleControl';
 import { IMenuService, MenuId, IMenu } from 'vs/platform/actions/common/actions';
 import { StandardMouseEvent } from 'vs/base/browser/mouseEvent';
 import { createAndFillInActionBarActions, createAndFillInContextMenuActions } from 'vs/platform/actions/browser/menuEntryActionViewItem';
@@ -476,7 +477,9 @@ export class EditorGroupView extends Themable implements IEditorGroupView {
 		}
 
 		// Create new based on options
-		if (this.accessor.partOptions.showTabs) {
+		if (!this.accessor.partOptions.showTitleControl) {
+			this.titleAreaControl = this.scopedInstantiationService.createInstance(NoTitleControl, this.titleContainer, this.accessor, this);
+		} else if (this.accessor.partOptions.showTabs) {
 			this.titleAreaControl = this.scopedInstantiationService.createInstance(TabsTitleControl, this.titleContainer, this.accessor, this);
 		} else {
 			this.titleAreaControl = this.scopedInstantiationService.createInstance(NoTabsTitleControl, this.titleContainer, this.accessor, this);
@@ -699,7 +702,8 @@ export class EditorGroupView extends Themable implements IEditorGroupView {
 		this.updateTitleContainer();
 
 		// Title control Switch between showing tabs <=> not showing tabs
-		if (event.oldPartOptions.showTabs !== event.newPartOptions.showTabs) {
+		if ((event.oldPartOptions.showTitleControl !== event.newPartOptions.showTitleControl) ||
+			(event.oldPartOptions.showTabs !== event.newPartOptions.showTabs)) {
 
 			// Recreate title control
 			this.createTitleAreaControl();

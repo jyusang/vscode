@@ -491,6 +491,32 @@ export class ToggleStatusbarVisibilityAction extends Action2 {
 
 registerAction2(ToggleStatusbarVisibilityAction);
 
+// --- Toggle Title Control Visibility
+
+registerAction2(class extends Action2 {
+
+	constructor() {
+		super({
+			id: 'workbench.action.toggleTitleControlVisibility',
+			title: {
+				value: localize('toggleTitleControl', 'Toggle Title Control Visibility'),
+				original: 'Toggle Title Control Visibility'
+			},
+			category: CATEGORIES.View,
+			f1: true
+		});
+	}
+
+	run(accessor: ServicesAccessor): Promise<void> {
+		const configurationService = accessor.get(IConfigurationService);
+
+		const visibility = configurationService.getValue<string>('workbench.editor.showTitleControl');
+		const newVisibilityValue = !visibility;
+
+		return configurationService.updateValue('workbench.editor.showTitleControl', newVisibilityValue);
+	}
+});
+
 // --- Toggle Tabs Visibility
 
 registerAction2(class extends Action2 {

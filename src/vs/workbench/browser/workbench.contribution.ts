@@ -30,6 +30,11 @@ const registry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Con
 				description: localize('tabScrollbarHeight', "Controls the height of the scrollbars used for tabs and breadcrumbs in the editor title area."),
 				default: 'default',
 			},
+			'workbench.editor.showTitleControl': {
+				'type': 'boolean',
+				'description': localize('showEditorTitleControl', "Controls whether opened editors should show title control or not."),
+				'default': true
+			},
 			'workbench.editor.showTabs': {
 				'type': 'boolean',
 				'description': localize('showEditorTabs', "Controls whether opened editors should show in tabs or not."),

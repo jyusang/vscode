@@ -986,6 +986,7 @@ export interface IWorkbenchEditorConfiguration {
 }
 
 interface IEditorPartConfiguration {
+	showTitleControl?: boolean;
 	showTabs?: boolean;
 	wrapTabs?: boolean;
 	scrollToSwitchTabs?: boolean;
